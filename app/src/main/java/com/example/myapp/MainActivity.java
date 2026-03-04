@@ -35,11 +35,6 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        button.setText("Roda");
-        textView.setText("Roda tbm");
-
-
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
