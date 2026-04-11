@@ -1,10 +1,12 @@
 package com.example.myapp;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,14 +20,14 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button button;
-    TextView textView;
+    Button btnProximo, btnAnterior;
 
-    EditText edMin;
-    EditText edMax;
+    ImageView imageView;
 
+    int fotos[] = new int[]{R.drawable.cachorro,R.drawable.gardem, R.drawable.happy, R.drawable.patinho, R.drawable.porquinho,};
 
-    int i;
+    int posicao=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,84 +35,32 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        button = findViewById(R.id.button);
-        textView = findViewById(R.id.textView);
-        edMin = findViewById(R.id.edMin);
-        edMax = findViewById(R.id.edMax);
-
         EdgeToEdge.enable(this);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        btnAnterior = findViewById(R.id.buttonAnterior);
+        btnProximo = findViewById(R.id.buttonProximo);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Random r = new Random();
+        imageView = findViewById(R.id.imageView);
 
-                String strMin = edMin.getText().toString();
-                String strMax = edMax.getText().toString();
+        btnProximo.setOnClickListener(v -> {
+            posicao++;
 
-                if (strMin.isEmpty()){
-                    edMin.setError("Informe um número");
-                    edMin.requestFocus();
-                    return;
-                }
-
-                if (strMax.isEmpty()){
-                    edMax.setError("Informe um número");
-                    edMin.requestFocus();
-                    return;
-                }
-
-                int min = Integer.parseInt(strMin);
-                int max = Integer.parseInt(strMax);
-
-
-
-                i = r.nextInt(max - min) + min;
-                button.setText(Integer.toString(i));
+            if (posicao>fotos.length-1) {
+                posicao = 0;
             }
+            imageView.setImageResource(fotos[posicao]);
+            Toast.makeText(this, String.valueOf(posicao), Toast.LENGTH_SHORT).show();
         });
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.v("cicloVida", "OnStart");
-    }
+        btnAnterior.setOnClickListener(v -> {
+            posicao--;
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.v("cicloVida", "OnRestart");
-    }
+            if (posicao<0) {
+                posicao = fotos.length-1;
+            }
+            imageView.setImageResource(fotos[posicao]);
+            Toast.makeText(this, String.valueOf(posicao), Toast.LENGTH_SHORT).show();
+        });
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.v("cicloVida", "OnDestroy");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.v("cicloVida", "OnPause");
-        Toast.makeText(this, "onPause",Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.v("cicloVida", "OnStop");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.v("cicloVida", "OnResume");
     }
 }
