@@ -1,9 +1,6 @@
 package com.example.myapp;
 
-import android.media.Image;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -12,21 +9,18 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import java.util.Random;
+import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnProximo, btnAnterior;
+    Button btnCalcular;
+
+    TextView textView;
+
+    EditText edPeso, edAltura;
 
     ImageView imageView;
-
-    int fotos[] = new int[]{R.drawable.cachorro,R.drawable.gardem, R.drawable.happy, R.drawable.patinho, R.drawable.porquinho,};
-
-    int posicao=0;
 
 
     @Override
@@ -37,30 +31,62 @@ public class MainActivity extends AppCompatActivity {
 
         EdgeToEdge.enable(this);
 
-        btnAnterior = findViewById(R.id.buttonAnterior);
-        btnProximo = findViewById(R.id.buttonProximo);
-
+        textView = findViewById(R.id.textView);
+        btnCalcular = findViewById(R.id.buttonCalcular);
+        edAltura = findViewById(R.id.edAltura);
+        edPeso = findViewById(R.id.edPeso);
         imageView = findViewById(R.id.imageView);
 
-        btnProximo.setOnClickListener(v -> {
-            posicao++;
+        btnCalcular.setOnClickListener(v -> {
+            String strAltura = edAltura.getText().toString();
+            String strPeso = edPeso.getText().toString();
 
-            if (posicao>fotos.length-1) {
-                posicao = 0;
+            if (strAltura.isEmpty()){
+                edAltura.setError("Informe a altura");
+                edAltura.requestFocus();
+                return;
             }
-            imageView.setImageResource(fotos[posicao]);
-            Toast.makeText(this, String.valueOf(posicao), Toast.LENGTH_SHORT).show();
+
+            if (strPeso.isEmpty()){
+                edPeso.setError("Informe o peso");
+                edPeso.requestFocus();
+                return;
+            }
+
+            double peso = Double.parseDouble(strPeso);
+            double altura = Double.parseDouble(strAltura);
+
+            double imc = peso/(altura*altura);
+
+            DecimalFormat dc  = new DecimalFormat("##.##");
+            textView.setText(dc.format(imc));
+
+            if (imc < 18.5) {
+                imageView.setImageResource(R.drawable.abaixopeso);
+                return;
+            }
+            if (imc < 25) {
+                imageView.setImageResource(R.drawable.normal);
+                return;
+            }
+            if (imc < 30) {
+                imageView.setImageResource(R.drawable.sobrepeso);
+                return;
+            }
+            if (imc < 35) {
+                imageView.setImageResource(R.drawable.obesidade1);
+                return;
+            }
+            if (imc < 40) {
+                imageView.setImageResource(R.drawable.obesidade2);
+                return;
+            }
+
+            imageView.setImageResource(R.drawable.obesidade3);
+            
         });
 
-        btnAnterior.setOnClickListener(v -> {
-            posicao--;
 
-            if (posicao<0) {
-                posicao = fotos.length-1;
-            }
-            imageView.setImageResource(fotos[posicao]);
-            Toast.makeText(this, String.valueOf(posicao), Toast.LENGTH_SHORT).show();
-        });
 
     }
 }

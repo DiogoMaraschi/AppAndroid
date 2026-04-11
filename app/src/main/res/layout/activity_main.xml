@@ -8,36 +8,60 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/buttonAnterior"
+        android:id="@+id/buttonCalcular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Anterior"
+        android:layout_marginBottom="16dp"
+        android:text="Calcular"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonProximo"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <Button
-        android:id="@+id/buttonProximo"
+    <EditText
+        android:id="@+id/edPeso"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Próximo"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonAnterior"
+        android:ems="10"
+        android:hint="Peso"
+        android:inputType="number|numberDecimal"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/buttonAnterior"
-        app:layout_constraintTop_toTopOf="@+id/buttonAnterior"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edAltura" />
+
+    <EditText
+        android:id="@+id/edAltura"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Altura"
+        android:inputType="number|numberDecimal"
+        app:layout_constraintBottom_toTopOf="@+id/edPeso"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/buttonAnterior"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCalcular"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toBottomOf="@+id/edPeso"
+        app:srcCompat="@drawable/abaixopeso" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="--"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edPeso" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
